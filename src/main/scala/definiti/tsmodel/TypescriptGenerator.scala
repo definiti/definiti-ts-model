@@ -43,7 +43,7 @@ object TypescriptGenerator {
 
   private def appendNative(buffer: StringBuilder)(implicit context: Context): Unit = {
     Seq("DateWrapper", "ListWrapper", "NumberWrapper", "StringWrapper") foreach { className =>
-      buffer.append(Source.fromResource(s"generators/ts/native/$className.ts").getLines.mkString("", "\n", "\n"))
+      buffer.append(Source.fromResource(s"native/$className.ts").getLines.mkString("", "\n", "\n"))
     }
   }
 
