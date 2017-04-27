@@ -3,6 +3,9 @@ export class ListWrapper<A> {
 
     constructor(inner: Array<A>) {
         this.inner = inner;
+        for (let i = 0 ; i < inner.length ; i++) {
+            Object.defineProperty(this, i.toString(), { get: () => this.inner[i], set: (v) => this.inner[i] = v });
+        }
     }
 
     nonEmpty(): boolean {
@@ -23,11 +26,11 @@ export class ListWrapper<A> {
     }
 
     forall(f: (A) => Boolean): Boolean {
-        return this.inner.every(f);
+        return this.inner.every(f as (A) => boolean);
     }
 
     exists(f: (A) => Boolean): Boolean {
-        return this.inner.some(f);
+        return this.inner.some(f as (A) => boolean);
     }
 
     foldLeft<B>(startValue: B, f: (B, A) => B): B {
@@ -36,5 +39,9 @@ export class ListWrapper<A> {
             acc = f(acc, this.inner[i]);
         }
         return acc;
+    }
+
+    map<B>(f: (A) => B): ListWrapper<B> {
+        return new ListWrapper(this.inner.map(f));
     }
 }

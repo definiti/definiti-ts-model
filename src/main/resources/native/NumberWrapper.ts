@@ -1,7 +1,7 @@
 export class NumberWrapper {
-    private inner: Number;
+    private inner: number;
 
-    constructor(inner: Number) {
+    constructor(inner: number) {
         this.inner = inner;
     }
 

@@ -158,13 +158,13 @@ object TypescriptGenerator {
     val __resultAliases = definedType.verifications
       .flatMap(_.function.parameters.map(_.name))
       .distinct
-      .map(parameter => s"const $parameter = __result;")
+      .map(parameter => s"const $parameter = __value;")
       .mkString("\n")
 
     val verifications = (
       definedType.verifications.map(generateTypeVerification)
         ++
-        definedType.inherited.map(inherited => s"verify$inherited(__result)")
+        definedType.inherited.map(inherited => s"verify$inherited(__value)")
       ).mkString(", ")
 
     val realType = originalTypeOpt.map(_.typeName).getOrElse(definedType.name)
@@ -183,7 +183,16 @@ object TypescriptGenerator {
        |export interface ${definedType.name}$typeDefinition extends $$$realType$originalTypeGenerics {}
        |
        |export function ${definedType.name}$typeDefinition(${generateAttributeParameters(definedType.attributes)}): string|Readonly<${definedType.name}$typeDefinition> {
-       |  const __result = {${definedType.attributes.map(_.name).mkString(", ")}};
+       |  const value = {${definedType.attributes.map(_.name).mkString(", ")}};
+       |  const errorsOnValidation = validateBuilt${definedType.name}(value);
+       |  if (errorsOnValidation) {
+       |    return errorsOnValidation;
+       |  } else {
+       |    return Object.freeze(value);
+       |  }
+       |}
+       |
+       |function validateBuilt${definedType.name}(__value: ${definedType.name}): string|null {
        |  ${__resultAliases}
        |  let __errorOpt = null;
        |  const __verifications = [
@@ -198,7 +207,7 @@ object TypescriptGenerator {
        |  if (__errorOpt) {
        |    return __errorOpt;
        |  } else {
-       |    return Object.freeze(__result);
+       |    return null;
        |  }
        |}
      """.stripMargin

@@ -12,4 +12,6 @@ type List[A] {
   exists(f: A => Boolean): Boolean
 
   foldLeft[B](startValue: B, f: (B, A) => B): B
+
+  map[B](f: A => B): List[B]
 }

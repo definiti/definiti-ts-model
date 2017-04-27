@@ -24,4 +24,8 @@ export class StringWrapper{
     matches(regex: StringWrapper): boolean {
         return new RegExp(regex.inner).test(this.inner);
     }
+
+    contains(search: StringWrapper): boolean {
+        return this.inner.indexOf(search.inner) >= 0;
+    }
 }
