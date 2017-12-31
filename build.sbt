@@ -11,6 +11,7 @@ scalaVersion := "2.12.1"
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
 libraryDependencies += "io.github.definiti" %% "core" % "0.2.0-SNAPSHOT"
+libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.0.0"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 
