@@ -1,0 +1,31 @@
+package users.adhesion
+
+import users.common.NonEmptyList
+import users.common.RequiredString
+import users.common.IsNonBlank
+import users.common.Period
+
+type PeriodAdhesion {
+  id: RequiredString
+  period: Period
+  registrationPeriod: Period
+  activities: NonEmptyList[RequiredString]
+}
+
+type PeriodAdhesionCreation {
+  period: Period
+  registrationPeriod: Option[Period]
+  activities: NonEmptyList[RequiredString]
+}
+
+type RequestAdhesion {
+  period: String verifying IsNonBlank("Veuillez renseigner la période")
+  members: NonEmptyList[AdhesionMember]
+}
+
+type AdhesionMember {
+  firstName: String verifying IsNonBlank("Veuillez renseigner le prénom")
+  lastName: String verifying IsNonBlank("Veuillez renseigner le nom")
+  birthday: Date
+  activity: String verifying IsNonBlank("Veuillez renseigner l'activité")
+}

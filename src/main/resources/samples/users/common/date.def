@@ -1,0 +1,21 @@
+package users.common
+
+def dateIsBefore(date: Date, referenceDate: Date): Boolean => {
+  date.timestamp < referenceDate.timestamp
+}
+
+def dateIsAfter(date: Date, referenceDate: Date): Boolean => {
+  date.timestamp > referenceDate.timestamp
+}
+
+def dateIsEqual(date: Date, referenceDate: Date): Boolean => {
+  date.timestamp == referenceDate.timestamp
+}
+
+def dateIsBeforeOrEqual(date: Date, referenceDate: Date): Boolean => {
+  dateIsBefore(date, referenceDate) || dateIsEqual(date, referenceDate)
+}
+
+def dateIsAfterOrEqual(date: Date, referenceDate: Date): Boolean => {
+  dateIsEqual(date, referenceDate) || dateIsAfter(date, referenceDate)
+}
