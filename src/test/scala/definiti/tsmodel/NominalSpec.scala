@@ -25,6 +25,16 @@ class NominalSpec extends EndToEndSpec {
     val output = processFile("nominal.definedType")
     output should beValidRoot(definedType)
   }
+
+  it should "generate a valid scala AST for a valid alias type" in {
+    val output = processFile("nominal.aliasType")
+    output should beValidRoot(aliasType)
+  }
+
+  it should "generate a valid scala AST for a valid alias type in a package" in {
+    val output = processFile("nominal.package")
+    output should beValidRoot(packageAliasType)
+  }
 }
 
 object NominalSpec {
@@ -85,4 +95,31 @@ object NominalSpec {
     )
   )
 
+  val aliasType: Root = Root(
+    Module(
+      name = "",
+      ModuleImport("../definiti/native/verifications"),
+      ElementsImport("../definiti/native/verifications", Seq("Verification")),
+      Const(
+        name = "AliasStringVerification",
+        typ = verificationType("string"),
+        body = noVerification,
+        export = true
+      )
+    )
+  )
+
+  val packageAliasType: Root = Root(
+    Module(
+      name = "tst",
+      ModuleImport("../definiti/native/verifications"),
+      ElementsImport("../definiti/native/verifications", Seq("Verification")),
+      Const(
+        name = "AliasStringVerification",
+        typ = verificationType("string"),
+        body = noVerification,
+        export = true
+      )
+    )
+  )
 }

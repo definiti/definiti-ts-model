@@ -11,6 +11,7 @@ trait VerificationBuilder {
     namespace.elements.collect {
       case verification: Verification => buildVerification(verification)
       case definedType: DefinedType => buildDefinedTypeVerification(definedType, namespace)
+      case aliasType: AliasType => buildAliasTypeVerification(aliasType)
     }
   }
 
@@ -149,6 +150,22 @@ trait VerificationBuilder {
         )
       }
       .map(lazyExpression)
+  }
+
+  private def buildAliasTypeVerification(aliasType: AliasType): TsAST.TopLevelStatement = {
+    TsAST.Const(
+      name = s"${aliasType.name}Verification",
+      typ = verificationType(buildTsType(aliasType.alias, genericAsAny = true)),
+      body = buildAliasTypeVerificationBody(aliasType),
+      export = true
+    )
+  }
+
+  private def buildAliasTypeVerificationBody(aliasType: AliasType): TsAST.Expression = {
+    val typeVerification = buildTypeVerificationCall(aliasType.alias).map(lazyExpression)
+    val inheritances = aliasType.inherited.map(lazyVerification)
+    val allVerifications = typeVerification.toSeq ++ inheritances
+    buildVerificationWrapperExpression(allVerifications)
   }
 
   private def verificationType(innerType: TsAST.Type): TsAST.Type = {

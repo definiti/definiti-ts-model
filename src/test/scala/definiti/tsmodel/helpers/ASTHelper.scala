@@ -15,4 +15,12 @@ object ASTHelper {
       generics = Seq(innerType)
     )
   }
+
+  def lazyVerification(expression: Expression): Expression = {
+    MethodCall("verifications", "lazy", Seq(lazyExpression(expression)))
+  }
+
+  def lazyExpression(expression: Expression): Expression = {
+    ArrowFunction(Seq.empty, expression)
+  }
 }
