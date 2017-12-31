@@ -20,6 +20,11 @@ class NominalSpec extends EndToEndSpec {
     val output = processFile("nominal.verification")
     output should beValidRoot(verification)
   }
+
+  it should "generate a valid scala AST for a valid defined type" in {
+    val output = processFile("nominal.definedType")
+    output should beValidRoot(definedType)
+  }
 }
 
 object NominalSpec {
@@ -60,4 +65,24 @@ object NominalSpec {
       )
     )
   )
+
+  val definedType: Root = Root(
+    Module(
+      name = "",
+      ModuleImport("../definiti/native/verifications"),
+      ElementsImport("../definiti/native/verifications", Seq("Verification")),
+      Interface(
+        name = "MyType",
+        attributes = Seq(Attribute("myAttribute", Type("string"))),
+        export = true
+      ),
+      Const(
+        name = "MyTypeVerification",
+        typ = verificationType("MyType"),
+        body = noVerification,
+        export = true
+      )
+    )
+  )
+
 }

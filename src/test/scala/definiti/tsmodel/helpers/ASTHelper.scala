@@ -3,6 +3,8 @@ package definiti.tsmodel.helpers
 import definiti.tsmodel.TsAST._
 
 object ASTHelper {
+  val noVerification = AttributeCall("verifications", "none")
+
   def verificationType(innerType: String): Type = {
     verificationType(Type(innerType))
   }

@@ -59,9 +59,14 @@ trait ImportBuilder {
 
   private def extractImportsFromTypes(module: TsAST.Module): Seq[String] = {
     module.statements.collect {
+      case interface: TsAST.Interface => extractImportsFromInterface(interface)
       case function: TsAST.Function => extractImportsFromFunction(function)
       case const: TsAST.Const => extractImportsFromConst(const)
     }.flatten
+  }
+
+  private def extractImportsFromInterface(interface: TsAST.Interface): Seq[String] = {
+    interface.attributes.flatMap(attribute => extractImportsFromType(attribute.typ))
   }
 
   private def extractImportsFromFunction(function: TsAST.Function): Seq[String] = {

@@ -7,6 +7,7 @@ class ModelBuilder(config: Configuration, val library: Library)
   extends ExpressionBuilder
     with FunctionsBuilder
     with ImportBuilder
+    with InterfacesBuilder
     with TypeBuilder
     with VerificationBuilder {
   def build(root: Root): TsAST.Root = {
@@ -28,7 +29,7 @@ class ModelBuilder(config: Configuration, val library: Library)
   private def buildModule(name: String, namespace: Namespace): TsAST.Module = {
     val moduleWithoutImports = TsAST.Module(
       name = name,
-      statements = buildFunctions(namespace) ++ buildVerifications(namespace)
+      statements = buildInterfaces(namespace) ++ buildFunctions(namespace) ++ buildVerifications(namespace)
     )
     moduleWithoutImports.copy(statements = buildImports(moduleWithoutImports) ++ moduleWithoutImports.statements)
   }
