@@ -1,0 +1,13 @@
+package users.common
+
+type RequiredString = String verifying IsNonBlank
+verification IsNonBlank {
+  "Please provide this field"
+  (string: String) => {
+    string.nonEmpty()
+  }
+}
+
+def containsOnyNumber(string: String): Boolean => {
+  string.matches("^[0-9]+$")
+}

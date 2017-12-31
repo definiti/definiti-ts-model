@@ -1,0 +1,9 @@
+package users.common
+
+type Email = String verifying IsEmail
+verification IsEmail {
+  "The email address is invalid"
+  (string: String) => {
+    string.matches("^.*@.*$")
+  }
+}
