@@ -15,9 +15,16 @@ class NominalSpec extends EndToEndSpec {
     val output = processFile("nominal.extendedContext")
     output should beValidRoot(extendedContext)
   }
+
+  it should "generate a valid scala AST for a valid verification" in {
+    val output = processFile("nominal.verification")
+    output should beValidRoot(verification)
+  }
 }
 
 object NominalSpec {
+  import definiti.tsmodel.helpers.ASTHelper._
+
   val namedFunction: Root = Root(
     Module(
       name = "",
@@ -32,4 +39,25 @@ object NominalSpec {
   )
 
   val extendedContext: Root = Root()
+
+  val verification: Root = Root(
+    Module(
+      name = "",
+      ModuleImport("../definiti/native/verifications"),
+      ElementsImport("../definiti/native/verifications", Seq("Verification")),
+      Const(
+        name = "AlwaysTrueVerification",
+        typ = verificationType("string"),
+        body = MethodCall(
+          expression = "verifications",
+          method = "simple",
+          parameters = Seq(
+            StringValue("Never fail"),
+            ArrowFunction(Seq(Parameter("x", Type("string"))), BooleanValue(true))
+          )
+        ),
+        export = true
+      )
+    )
+  )
 }

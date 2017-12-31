@@ -18,7 +18,9 @@ trait ImportBuilder {
 
   private def commonImports(module: TsAST.Module): Seq[TsAST.Import] = {
     val extensions = Seq("Boolean", "Date", "List", "Number", "Option", "String").map(typeName => s"${typeName}Extension")
-    extensions
+    val validation = Seq("verifications")
+    val moduleImports = extensions ++ validation
+    moduleImports
       .filter(isModuleUsed(_, module))
       .map(moduleName => s"definiti.native.${moduleName}")
       .map(createModuleImport(module, _))
@@ -58,6 +60,7 @@ trait ImportBuilder {
   private def extractImportsFromTypes(module: TsAST.Module): Seq[String] = {
     module.statements.collect {
       case function: TsAST.Function => extractImportsFromFunction(function)
+      case const: TsAST.Const => extractImportsFromConst(const)
     }.flatten
   }
 
@@ -66,6 +69,12 @@ trait ImportBuilder {
     val parameterImports = function.parameters.flatMap(parameter => extractImportsFromType(parameter.typ))
     val expressionImports = extractImportsFromExpression(function.expression)
     returnImports ++ parameterImports ++ expressionImports
+  }
+
+  private def extractImportsFromConst(const: TsAST.Const): Seq[String] = {
+    val returnImports = extractImportsFromType(const.typ)
+    val expressionImports = extractImportsFromExpression(const.body)
+    returnImports ++ expressionImports
   }
 
   private def extractImportsFromType(typ: TsAST.Type): Seq[String] = {
