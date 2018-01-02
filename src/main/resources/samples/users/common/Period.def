@@ -1,0 +1,15 @@
+package users.common
+
+import users.common.dateIsBeforeOrEqual
+
+type Period {
+  start: Date
+  end: Date
+
+  verify {
+    "The start of the period should be before the end"
+    (period) => {
+      dateIsBeforeOrEqual(period.start, period.end)
+    }
+  }
+}

@@ -1,0 +1,10 @@
+package users.common
+
+type NonEmptyList[A] = List[A] verifying IsNonEmptyList
+
+verification IsNonEmptyList {
+  "The list should not be empty"
+  [A](list: List[A]) => {
+    list.nonEmpty()
+  }
+}

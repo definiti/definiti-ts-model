@@ -1,0 +1,39 @@
+package users
+
+import users.common.Email
+import users.common.IsNonBlank
+import users.common.NonEmptyList
+import users.common.IsNonEmptyList
+import users.common.containsOnyNumber
+
+type Profile {
+  email: Email
+  firstName: String verifying IsNonBlank("Please provide a first name")
+  lastName: String verifying IsNonBlank("Please provide a name")
+  address: String verifying IsNonBlank("Please provide an address")
+  zipCode: String verifying IsNonBlank("Please provide a zip code")
+  city: String verifying IsNonBlank("Please provide a city")
+  phones: NonEmptyList[Phone]
+
+  verify {
+    "firstName and lastName should not be equal"
+    (profile) => {
+      profile.firstName != profile.lastName
+    }
+  }
+}
+
+type Phone {
+  name: String verifying IsNonBlank("Please provide a phone name")
+  number: String verifying IsNonBlank("Please provide a phone number")
+}
+
+def isZipCode(zipCode: String): Boolean => {
+  containsOnyNumber(zipCode)
+}
+
+type Tst = String verifying IsNonBlank("plop")
+
+type Tst2 = List[Email]
+
+type Tst3 = List[Email] verifying IsNonEmptyList("tst")
