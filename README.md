@@ -1,34 +1,17 @@
 # Definiti - typescript model
 
-For core project, see [Definiti/Definiti](https://github.com/definiti/definiti).
+This project is the generator of typescript model (interfaces and verifications) of the Definiti language.
+Its objective is to take the Definiti AST and convert into a typescript AST.
+It is a plugin of the Definiti language, used in `definiti-core`.
 
-## Get started
+## Status
 
-⚠ This project is the subject of active research.
-It is not ready for production use yet.
+[![Build Status](https://travis-ci.org/definiti/definiti-ts-model.svg?branch=master)](https://travis-ci.org/definiti/definiti-ts-model)
 
-This part describes how to test the generator with the core compiler.
-For more advanced usage, please come back later.
+## Getting start
 
-### Dependency: Core
-
-Clone the repository:
-
-```sh
-$ git clone git@github.com:definiti/definiti.git
-```
-
-Go into the project and publish to local repository:
-
-```
-$ cd definiti
-$ sbt publishLocal
-```
-
-⚠️ Be careful of the core version during development.
-Check it in `build.sbt` file of each project.
-
-### Typescript model generator
+> If you want to use the language, please go to: https://definiti.github.io/
+> This project is the implementation of the typescript model generator, not the whole system.
 
 Clone the repository:
 
@@ -40,18 +23,16 @@ Go into the project and launch sbt:
 
 ```
 $ cd definiti-ts-model
-$ sbt run
+$ sbt test
 ```
 
-It will read the file `src/main/resources/samples/first.def`
-and save the results into `target/samples/result.ts` file.
+It will compile the project and run tests.
 
-Feel free to change the `first.def` file to test it.
+# Roadmap and contribution
 
-## Roadmap (not ordered)
+If you want to know the roadmap or contribute to the project,
+please see [Issues](https://github.com/definiti/definiti-ts-model/issues)
+and [Projects](https://github.com/definiti/definiti-ts-model/projects).
 
-* [x] First alpha alpha MVP
-* [ ] Generate a more usable and maintainable typescript AST
-* [ ] Create documentation
-* [ ] Create command-line tool
-* [ ] Follow updates of core project
+If you want more information about the whole project, please go to
+[the project website](https://definiti.github.io).
