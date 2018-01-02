@@ -6,14 +6,14 @@ name := "ts-model"
 
 version := "0.2.0-SNAPSHOT"
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.4"
 
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
-libraryDependencies += "io.github.definiti" %% "core" % "0.2.0-SNAPSHOT"
-libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.0.0"
+libraryDependencies += "io.github.definiti" %% "core" % "0.2.0"
+libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.4.0"
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-language:implicitConversions", "-feature")
 
